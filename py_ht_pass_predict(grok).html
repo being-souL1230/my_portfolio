@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rishab's Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #f9f9f9;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #007bff;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .logo {
+      font-weight: bold;
+      font-size: 22px;
+    }
+    nav ul {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    /* Responsive Navbar */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 40px;
+      min-height: 80vh;
+    }
+
+    #home {
+      background: linear-gradient(to right, #eef2f3, #f9f9f9);
+      text-align: center;
+    }
+
+    #home h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    #home p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .btn {
+      margin-top: 30px;
+      background: #007bff;
+      padding: 12px 25px;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .project-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 240px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.project-card h4 {
+  margin-bottom: 10px;
+}
+.project-card a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- 🔵 Navbar -->
+  <nav>
+    <div class="logo">Rishab</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- 🔵 Home Section -->
+  <section id="home">
+    <h1>Hi, I'm Rishab 👋</h1>
+    <p>Python Enthusiast | Web Developer | Logic Lover</p>
+    <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+  </section>
+
+  <!-- 🔴 Projects Section -->
+  <section id="projects">
+    <h2>🚀 Projects</h2>
+    <div style="margin: 30px 0;">
+      <button class="btn" onclick="loadDemo('pass')">🧮 Pass Predictor</button>
+      <button class="btn" onclick="loadDemo('mood')">🧠 Mood Detector</button>
+      <button class="btn" onclick="showGithubProjects()">💻 GitHub Projects</button>
+    </div>
+    
+    <!-- 👇 Demo Project Display Area -->
+    <div id="demoOutput" style="margin-top: 30px;"></div>
+    
+    <!-- 👇 GitHub Projects Display Area -->
+    <div id="githubProjects" style="display: none; margin-top: 30px;">
+      <h3>My GitHub Projects</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
+        <!-- 🟢 GitHub Project Cards -->
+        <div class="project-card">
+          <h4>Flask Chat App</h4>
+          <p>Chat app with login/logout, Flask + MySQL</p>
+          <a href="https://github.com/username/chat-app" target="_blank">🔗 GitHub</a>
+        </div>
+        <div class="project-card">
+          <h4>ERP System</h4>
+          <p>College ERP with attendance, Flask backend</p>
+          <a href="https://github.com/username/erp-system" target="_blank">🔗 GitHub</a>
+        </div>
+        <div class="project-card">
+          <h4>Code Snippet Manager</h4>
+          <p>Save/view code snippets like LeetCode</p>
+          <a href="https://github.com/username/snippet-manager" target="_blank">🔗 GitHub</a>
+        </div>
+        <div class="project-card">
+          <h4>Portfolio Source</h4>
+          <p>This portfolio’s source code</p>
+          <a href="https://github.com/username/portfolio" target="_blank">🔗 GitHub</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- // TODO: Paste <template id="pass-demo"> here -->
+      <template id="pass-demo">
+        <h3>🎓 Pass Predictor</h3>
+        <div style="margin: 20px auto; max-width: 400px;">
+          <input type="number" id="study_hours" placeholder="Study Hours (e.g. 5.5)" min="0" max="24" step="0.1"><br>
+          <input type="number" id="sleep_hours" placeholder="Sleep Hours (e.g. 7)" min="0" max="24" step="0.1"><br>
+          <input type="number" id="attendance" placeholder="Attendance % (e.g. 85)" min="0" max="100" step="1"><br>
+          <input type="number" id="class_avg_score" placeholder="Class Avg Score (e.g. 60)" min="0" max="100" step="1"><br>
+          <input type="number" id="student_test_score" placeholder="Your Test Score (e.g. 78)" min="0" max="100" step="1"><br>
+          <input type="number" id="student_assignment_score" placeholder="Assignment Score (e.g. 75)" min="0" max="100" step="1"><br>
+          <input type="number" id="num_failed_before" placeholder="Times Failed Before (e.g. 1)" min="0" step="1"><br>
+          <input type="number" id="participation_score" placeholder="Participation Score (0-10)" min="0" max="10" step="1"><br><br>
+          <button onclick="predict()" class="btn">Predict</button>
+          <div id="errorMessage" class="error"></div>
+        </div>
+      
+        <div id="loader" style="display: none; margin: 20px auto;">⏳ Processing...</div>
+      
+        <div id="dialogBox" style="display: none; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; margin: 20px auto;">
+          <h3 id="dialogMessage">Result</h3>
+          <p id="dialogDetails"></p>
+          <button onclick="closeDialog()" class="btn" style="background-color: #28a745;">OK</button>
+        </div>
+      </template>
+    <!-- // TODO: Paste <template id="mood-demo"> here -->
+      
+      <template id="mood-demo">
+        <h3>🧠 Mood Detector</h3>
+        <div style="margin: 20px auto; max-width: 450px;">
+          <input type="text" id="moodInput" placeholder="Type a sentence (e.g. I am feeling great today!)" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px;"><br><br>
+          <button onclick="detectMood()" class="btn">Analyze</button>
+        </div>
+      
+        <div id="moodLoader" style="display:none; margin: 20px auto;">⏳ Analyzing...</div>
+      
+        <div id="moodDialog" style="display:none; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 400px; margin: 20px auto;">
+          <h3 id="moodTitle">Mood Result</h3>
+          <p id="moodDetails"></p>
+          <button onclick="document.getElementById('moodDialog').style.display='none'" class="btn" style="background-color: #28a745;">OK</button>
+        </div>
+        
+      </template>
+    <!-- 👇 Yaha pe projects buttons/tab banaana hai -->
+    <!-- // TODO: Add project tab buttons here -->
+    <!-- // TODO: Add <template> for pass predictor -->
+    <!-- // TODO: Add <template> for mood detector -->
+    <!-- // TODO: Add GitHub project cards -->
+  </section>
+
+  <!-- 🟢 Contact Section -->
+  <section id="contact">
+    <h2>📬 Contact</h2>
+    <!-- // TODO: Add contact form or email link here -->
+  </section>
+
+  <!-- 🟣 Pyodide Loader -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script>
+    let pyodide = null;
+
+    async function loadPy() {
+      pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/" });
+      await pyodide.loadPackage(["numpy", "pandas", "scikit-learn", "micropip"]);
+      await pyodide.runPythonAsync(`import micropip; await micropip.install("vaderSentiment")`);
+      console.log("✅ Pyodide and packages loaded");
+    }
+
+    loadPy();
+
+function loadDemo(type) {
+  const demoContainer = document.getElementById("demoOutput");
+  const githubSection = document.getElementById("githubProjects");
+  githubSection.style.display = "none";
+  demoContainer.innerHTML = "";
+
+  const templateId = type === "pass" ? "pass-demo" : "mood-demo";
+  const template = document.getElementById(templateId);
+  if (template) {
+    const clone = template.content.cloneNode(true);
+    demoContainer.appendChild(clone);
+  }
+}
+
+function showGithubProjects() {
+  document.getElementById("demoOutput").innerHTML = "";
+  document.getElementById("githubProjects").style.display = "block";
+}
+
+  async function predict() {
+    const fields = [
+      "study_hours", "sleep_hours", "attendance", "class_avg_score",
+      "student_test_score", "student_assignment_score",
+      "num_failed_before", "participation_score"
+    ];
+
+    const inputData = {};
+    for (let field of fields) {
+      const input = document.getElementById(field);
+      const val = parseFloat(input.value);
+      if (isNaN(val) || (input.min && val < parseFloat(input.min)) || (input.max && val > parseFloat(input.max))) {
+        showError(`Please enter a valid value for ${field.replace(/_/g, " ")}.`);
+        return;
+      }
+      inputData[field] = val;
+    }
+
+    document.getElementById("loader").style.display = "block";
+    document.getElementById("errorMessage").innerText = "";
+
+    const inputArray = Object.values(inputData);
+    const code = `
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+X = np.array([
+    [5, 7, 85, 60, 78, 80, 0, 8],
+    [2, 5, 60, 50, 40, 35, 2, 3],
+    [7, 6, 90, 70, 88, 85, 0, 9],
+    [4, 6, 70, 55, 60, 65, 1, 5],
+    [1, 4, 40, 45, 30, 25, 3, 2]
+])
+y = np.array([1, 0, 1, 1, 0])
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+model = LogisticRegression()
+model.fit(X_scaled, y)
+
+user_input = np.array([${inputArray}]).reshape(1, -1)
+user_scaled = scaler.transform(user_input)
+
+prediction = model.predict(user_scaled)[0]
+prob = model.predict_proba(user_scaled)[0]
+
+{
+  "label": "PASS" if prediction == 1 else "FAIL",
+  "confidence": round(float(prob[prediction]) * 100, 1),
+  "prob_pass": round(float(prob[1]) * 100, 1),
+  "prob_fail": round(float(prob[0]) * 100, 1)
+}
+    `;
+    try {
+      const result = await pyodide.runPythonAsync(code);
+      showDialog(
+        `Prediction: ${result.get("label")} (${result.get("confidence")}% confidence)`,
+        `✅ Pass: ${result.get("prob_pass")}%<br>❌ Fail: ${result.get("prob_fail")}%`
+      );
+    } catch (err) {
+      showError("Prediction error: " + err.message);
+      console.error(err);
+    } finally {
+      document.getElementById("loader").style.display = "none";
+    }
+  }
+
+  function showDialog(title, html) {
+    document.getElementById("dialogMessage").innerText = title;
+    document.getElementById("dialogDetails").innerHTML = html;
+    document.getElementById("dialogBox").style.display = "block";
+  }
+
+  function closeDialog() {
+    document.getElementById("dialogBox").style.display = "none";
+  }
+
+  function showError(msg) {
+    document.getElementById("errorMessage").innerText = msg;
+  }
+
+
+async function detectMood() {
+  const input = document.getElementById("moodInput").value.trim();
+  if (!input) return;
+
+  document.getElementById("moodLoader").style.display = "block";
+  document.getElementById("moodDialog").style.display = "none";
+
+  const code = `
+import re
+
+text = """${input.replace(/"/g, '\\"')}"""
+
+stopwords = set(["i", "am", "is", "are", "was", "were", "a", "an", "the", "to", "of", "and", "but", "or", "in", "on", "with", "this", "that", "it", "for", "as", "at", "by", "be", "have", "has", "had", "so", "if", "not"])
+
+positive_words = ${JSON.stringify([
+  "happy", "joy", "great", "good", "love", "amazing", "awesome", "satisfied", "excited", "cheerful", "delighted", "grateful", "perfect", "proud", "hopeful", "calm", "peaceful", "inspired"
+])}
+
+negative_words = ${JSON.stringify([
+  "sad", "bad", "hate", "terrible", "awful", "angry", "upset", "disappointed", "miserable", "frustrated", "depressed", "hopeless", "lonely", "bored", "worried", "tired", "useless"
+])}
+
+neutral_words = ${JSON.stringify([
+  "okay", "fine", "average", "normal", "usual", "maybe", "typical", "regular", "neutral", "alright"
+])}
+
+text_clean = re.sub(r'[^\w\s]', '', text.lower())
+words = [w for w in text_clean.split() if w not in stopwords]
+total = len(words)
+
+pos = sum(1 for w in words if w in positive_words)
+neg = sum(1 for w in words if w in negative_words)
+neu = sum(1 for w in words if w in neutral_words)
+
+if total == 0:
+    mood = "Neutral"
+    confidence = 50
+    details = "No analyzable words"
+else:
+    pos_score = pos / total
+    neg_score = neg / total
+    neu_score = neu / total
+    emotional = (pos + neg) / total
+
+    if pos_score > neg_score and pos_score > neu_score:
+        mood = "Positive"
+        base = 60 + (pos_score * 80)
+        confidence = min(95, base + emotional * 20)
+    elif neg_score > pos_score and neg_score > neu_score:
+        mood = "Negative"
+        base = 60 + (neg_score * 80)
+        confidence = min(95, base + emotional * 20)
+    else:
+        mood = "Neutral"
+        base = 60 + (neu_score * 80)
+        confidence = min(95, base + emotional * 20)
+
+    details = f"Analyzed {total} words — 😊:{pos}, 😠:{neg}, 😐:{neu} | Emotional intensity: {round(emotional*100,1)}%"
+
+{
+  "mood": mood,
+  "confidence": round(confidence, 1),
+  "details": details
+}
+`;
+
+  try {
+    const result = await pyodide.runPythonAsync(code);
+    const res = result.toJs();
+
+    document.getElementById("moodLoader").style.display = "none";
+    document.getElementById("moodTitle").innerText = `Mood: ${res.mood}`;
+    document.getElementById("moodDetails").innerHTML = `
+      Confidence: <b>${res.confidence}%</b><br><br>
+      ${res.details}
+    `;
+    document.getElementById("moodDialog").style.display = "block";
+  } catch (err) {
+    console.error("Error:", err);
+    document.getElementById("moodLoader").style.display = "none";
+  }
+}
+
+
+  </script>
+
+  <!-- // TODO: Add JS to dynamically insert demo projects here -->
+
+</body>
+</html>
