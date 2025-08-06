@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rishab | Full Stack Developer & Python Enthusiast</title>
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍💻</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <style>
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      --shine-gradient: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+      --card-hover-transform: translateY(-10px) scale(1.02);
+      --primary: #007bff;
+      --primary-dark: #0062cc;
+      --secondary: #6c757d;
+      --success: #28a745;
+      --info: #17a2b8;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --dark-gray: #495057;
+      --border-radius: 8px;
+      --box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f6f9fc 0%, #e9f2f9 100%);
+      min-height: 100vh;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: var(--white);
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    h2 span {
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    a:hover {
+      color: var(--primary-dark);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 30px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+      background-color: var(--primary-dark);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: var(--shine-gradient);
+      transform: rotate(30deg);
+      transition: transform 0.4s ease;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .btn:hover::after {
+      transform: translateX(100%) rotate(30deg);
+    }
+
+    .btn:active {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 5px 10px rgba(0, 123, 255, 0.1);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow);
+    }
+
+    .btn-icon {
+      margin-right: 8px;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 15px 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 30px;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover:after {
+      width: 100%;
+      box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+      transform: scaleX(1);
+      transform-origin: left;
+      transition: transform 0.3s ease, width 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    /* Home Section */
+    #home {
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    .home-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home-content h1 {
+      font-size: 3.2rem;
+      margin-bottom: 25px;
+    }
+
+    .home-content h1 span {
+      color: var(--primary);
+      position: relative;
+    }
+
+    .home-content p {
+      font-size: 1.1rem;
+      color: var(--dark-gray);
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+
+    .expertise-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin: 40px 0;
+    }
+
+    .highlight-item {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+      animation: cardEntrance 0.8s ease-out;
+      transform-origin: center bottom;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px;
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .highlight-item:hover {
+      transform: var(--card-hover-transform);
+      box-shadow: var(--glass-shadow);
+      border-color: var(--primary);
+    }
+
+    .highlight-item::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: var(--shine-gradient);
+      transform: rotate(30deg);
+      animation: shine 3s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      from { transform: translateX(-100%) rotate(30deg); }
+      to { transform: translateX(100%) rotate(30deg); }
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes floatAnimation {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  }
+
+    .highlight-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--glass-border);
+      border-radius: 50%;
+      margin-bottom: 20px;
+      position: relative;
+      animation: floatAnimation 3s ease-in-out infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 60px;
+      height: 60px;
+      background-color: rgba(0, 123, 255, 0.1);
+      border-radius: 50%;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .highlight-icon i {
+      font-size: 24px;
+      color: var(--primary);
+    }
+
+    .icon-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: rgba(0, 123, 255, 0.1);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .highlight-content {
+      margin-bottom: 15px;
+    }
+
+    .highlight-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .highlight-subtitle {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .highlight-progress {
+      height: 6px;
+      background-color: rgba(0,0,0,0.05);
+      border-radius: 3px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 3px;
+      transition: width 1.5s ease-in-out;
+    }
+
+    .highlight-stats {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .skill-tag {
+      position: relative;
+      overflow: hidden;
+      background: var(--glass-bg);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      animation: tagFloat 1s ease-out forwards;
+      background-color: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .skill-tag:hover {
+      transform: translateY(-3px) scale(1.1);
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    @keyframes tagFloat {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .skill-tag:nth-child(1) { animation-delay: 0.1s; }
+    .skill-tag:nth-child(2) { animation-delay: 0.2s; }
+    .skill-tag:nth-child(3) { animation-delay: 0.3s; }
+    .skill-tag:nth-child(4) { animation-delay: 0.4s; }
+    .skill-tag:nth-child(5) { animation-delay: 0.5s; }
+    .skill-tag:nth-child(6) { animation-delay: 0.6s; }
+    .skill-tag:nth-child(7) { animation-delay: 0.7s; }
+    .skill-tag:nth-child(8) { animation-delay: 0.8s; }
+    .skill-tag:nth-child(9) { animation-delay: 0.9s; }
+      background-color: var(--primary);
+      color: var(--white);
+      transform: translateY(-3px);
+    
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .profile-circle {
+      display: none;
+    }
+
+    /* Projects Section */
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .project-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      position: relative;
+      overflow: hidden;
+      animation: cardEntrance 0.8s ease-out;
+      background: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .project-card:hover {
+      transform: var(--card-hover-transform);
+      box-shadow: var(--glass-shadow);
+      border-color: var(--primary);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background-image: var(--shine-gradient);
+      transform: rotate(30deg);
+      animation: shine 3s infinite linear;
+      pointer-events: none;
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .project-image {
+      height: 200px;
+      background-color: #f0f2f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--primary);
+    }
+
+    .project-content {
+      padding: 25px;
+    }
+
+    .project-title {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .project-description {
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .project-tag {
+      background-color: rgba(0, 123, 255, 0.1);
+      color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 15px;
+    }
+
+    /* Dialog Box Styling */
+    .dialog-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dialog-box {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .dialog-header h3 {
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .dialog-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray);
+    }
+
+    .dialog-close:hover {
+      color: var(--dark);
+    }
+
+    .dialog-input-group {
+      margin-bottom: 20px;
+    }
+
+    .dialog-input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .dialog-input-group input,
+    .dialog-input-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .dialog-input-group input:focus,
+    .dialog-input-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    }
+
+    .dialog-input-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .dialog-error {
+      color: #dc3545;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .dialog-result {
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin-top: 20px;
+      display: none;
+    }
+
+    .mood-positive {
+      background-color: rgba(40, 167, 69, 0.1);
+      border: 1px solid rgba(40, 167, 69, 0.3);
+    }
+
+    .mood-negative {
+      background-color: rgba(220, 53, 69, 0.1);
+      border: 1px solid rgba(220, 53, 69, 0.3);
+    }
+
+    .mood-neutral {
+      background-color: rgba(108, 117, 125, 0.1);
+      border: 1px solid rgba(108, 117, 125, 0.3);
+    }
+
+    .mood-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .mood-score {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    /* Contact Section */
+    #contact {
+      background-color: #f8f9fa;
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .contact-info {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      animation: slideInLeft 0.8s ease-out forwards;
+      padding: 30px;
+      border-radius: var(--border-radius);
+    }
+
+    .contact-info h3 {
+      margin-bottom: 25px;
+      color: var(--primary);
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-link {
+      background: var(--glass-bg);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      transform-origin: left;
+      animation: linkFadeIn 0.5s ease-out forwards;
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background-color: rgba(0, 123, 255, 0.05);
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+
+    .contact-link:hover {
+      background: rgba(0, 123, 255, 0.1);
+      transform: translateX(10px) scale(1.02);
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+    }
+
+    .contact-link i {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-right: 15px;
+      width: 40px;
+      text-align: center;
+    }
+
+    .contact-form {
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      animation: slideInRight 0.8s ease-out forwards;
+      padding: 30px;
+      border-radius: var(--border-radius);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    }
+
+    /* Footer */
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes linkFadeIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes socialPop {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .contact-link:nth-child(1) { animation-delay: 0.1s; }
+    .contact-link:nth-child(2) { animation-delay: 0.2s; }
+    .contact-link:nth-child(3) { animation-delay: 0.3s; }
+
+    .social-link:nth-child(1) { animation-delay: 0.1s; }
+    .social-link:nth-child(2) { animation-delay: 0.2s; }
+    .social-link:nth-child(3) { animation-delay: 0.3s; }
+    .social-link:nth-child(4) { animation-delay: 0.4s; }
+
+    footer {
+      background-color: var(--dark);
+      color: var(--white);
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .social-link {
+      background: var(--glass-bg);
+      backdrop-filter: blur(5px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      animation: socialPop 0.5s ease-out forwards;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: var(--white);
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background-color: var(--primary);
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3);
+    }
+
+    .copyright {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      
+      h2 {
+        font-size: 2.2rem;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: var(--transition);
+      }
+      
+      .nav-links.active {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+      
+      .nav-links li {
+        margin: 15px 0;
+      }
+    }
+
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      section {
+        padding: 60px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Rishab<span>.</span></div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home">
+    <div class="container">
+      <div class="home-content">
+        <h1>Crafting digital <span>experiences</span></h1>
+        
+        <p>I'm Rishab, a passionate Full Stack Developer with experience building modern web applications. I specialize in Python-based backend development with Flask & Django, while creating responsive frontends with HTML/CSS/JavaScript. My expertise extends to database design (MySQL/MongoDB), AI/ML implementations, and system architecture.</p>
+        
+        <div class="expertise-highlights">
+          <div class="highlight-item" data-expertise="fullstack">
+            <div class="highlight-icon">
+              <i class="fas fa-code"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-title">Full Stack Development</span>
+              <div class="highlight-progress">
+                <div class="progress-fill" style="width: 95%"></div>
+              </div>
+              <span class="highlight-subtitle">Frontend & Backend</span>
+            </div>
+            <div class="highlight-stats">
+              <span class="stat-number">95%</span>
+              <span class="stat-label">Success</span>
+            </div>
+          </div>
+          
+          <div class="highlight-item" data-expertise="ai-ml">
+            <div class="highlight-icon">
+              <i class="fas fa-brain"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-title">AI/ML Solutions</span>
+              <div class="highlight-progress">
+                <div class="progress-fill" style="width: 65%"></div>
+              </div>
+              <span class="highlight-subtitle">Machine Learning</span>
+            </div>
+            <div class="highlight-stats">
+              <span class="stat-number">65%</span>
+              <span class="stat-label">Success</span>
+            </div>
+          </div>
+          
+          <div class="highlight-item" data-expertise="database">
+            <div class="highlight-icon">
+              <i class="fas fa-database"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-title">Database Design</span>
+              <div class="highlight-progress">
+                <div class="progress-fill" style="width: 90%"></div>
+              </div>
+              <span class="highlight-subtitle">SQL & NoSQL</span>
+            </div>
+            <div class="highlight-stats">
+              <span class="stat-number">90%</span>
+              <span class="stat-label">Success</span>
+            </div>
+          </div>
+          
+          <div class="highlight-item" data-expertise="responsive">
+            <div class="highlight-icon">
+              <i class="fas fa-mobile-alt"></i>
+              <div class="icon-glow"></div>
+            </div>
+            <div class="highlight-content">
+              <span class="highlight-title">Responsive Design</span>
+              <div class="highlight-progress">
+                <div class="progress-fill" style="width: 70%"></div>
+              </div>
+              <span class="highlight-subtitle">Mobile First</span>
+            </div>
+            <div class="highlight-stats">
+              <span class="stat-number">70%</span>
+              <span class="stat-label">Success</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="skills-list">
+          <span class="skill-tag">HTML/CSS/JS</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C/C++</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">Django</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">AI/ML</span>
+        </div>
+        
+        <div class="cta-buttons">
+          <a href="#projects" class="btn btn-primary">
+            <i class="fas fa-eye btn-icon"></i> View Projects
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <i class="fas fa-paper-plane btn-icon"></i> Contact Me
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <div class="container">
+      <h2>My <span>Projects</span></h2>
+      
+      <div class="projects-container">
+        <!-- Pass Predictor Card -->
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Pass Predictor</h3>
+            <p class="project-description">ML model using Logistic Regression to predict student's pass/fail status based on academic input.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Pyodide</span>
+              <span class="project-tag">scikit-learn</span>
+              <span class="project-tag">ML</span>
+            </div>
+            <div class="project-actions">
+              <button class="btn btn-primary" onclick="showPassPredictorDialog()">
+                <i class="fas fa-play btn-icon"></i> Demo
+              </button>
+              <a href="#pass-predictor-details" class="btn btn-outline">
+                <i class="fas fa-info-circle btn-icon"></i> Details
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mood Detector Card -->
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <i class="fas fa-smile"></i>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Mood Detector</h3>
+            <p class="project-description">Analyzes user's sentence to detect sentiment (positive, negative, or neutral).</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Pyodide</span>
+              <span class="project-tag">NLP</span>
+              <span class="project-tag">vaderSentiment</span>
+            </div>
+            <div class="project-actions">
+              <button class="btn btn-primary" onclick="showMoodDetectorDialog()">
+                <i class="fas fa-play btn-icon"></i> Demo
+              </button>
+              <a href="#mood-detector-details" class="btn btn-outline">
+                <i class="fas fa-info-circle btn-icon"></i> Details
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Flask Chat App Card -->
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);">
+            <i class="fas fa-comments"></i>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Flask Chat App</h3>
+            <p class="project-description">Real-time chat app with login & logout, using Flask + MySQL</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Flask</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">WebSockets</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://github.com/being-souL1230/flask-chat-app" target="_blank" class="btn btn-primary">
+                <i class="fab fa-github btn-icon"></i> GitHub
+              </a>
+              <a href="#flask-chat-details" class="btn btn-outline">
+                <i class="fas fa-info-circle btn-icon"></i> Details
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ERP System Card -->
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);">
+            <i class="fas fa-university"></i>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">ERP System</h3>
+            <p class="project-description">College ERP system with student/faculty login, attendance tracking</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Django</span>
+              <span class="project-tag">PostgreSQL</span>
+              <span class="project-tag">REST API</span>
+            </div>
+            <div class="project-actions">
+              <a href="https://github.com/being-souL1230/erp-system" target="_blank" class="btn btn-primary">
+                <i class="fab fa-github btn-icon"></i> GitHub
+              </a>
+              <a href="#erp-system-details" class="btn btn-outline">
+                <i class="fas fa-info-circle btn-icon"></i> Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pass Predictor Dialog -->
+      <div id="passPredictorDialog" class="dialog-overlay">
+        <div class="dialog-box">
+          <div class="dialog-header">
+            <h3>Pass Predictor Demo</h3>
+            <button class="dialog-close" onclick="closeDialog('passPredictorDialog')">&times;</button>
+          </div>
+          <div class="dialog-input-group">
+            <label for="study_hours">Study Hours (e.g. 5.5)</label>
+            <input type="number" id="study_hours" min="0" max="24" step="0.1" placeholder="e.g. 5.5">
+          </div>
+          <div class="dialog-input-group">
+            <label for="sleep_hours">Sleep Hours (e.g. 7)</label>
+            <input type="number" id="sleep_hours" min="0" max="24" step="0.1" placeholder="e.g. 7">
+          </div>
+          <div class="dialog-input-group">
+            <label for="attendance">Attendance % (e.g. 85)</label>
+            <input type="number" id="attendance" min="0" max="100" step="1" placeholder="e.g. 85">
+          </div>
+          <div class="dialog-input-group">
+            <label for="class_avg_score">Class Avg Score (e.g. 60)</label>
+            <input type="number" id="class_avg_score" min="0" max="100" step="1" placeholder="e.g. 60">
+          </div>
+          <div class="dialog-input-group">
+            <label for="student_test_score">Your Test Score (e.g. 78)</label>
+            <input type="number" id="student_test_score" min="0" max="100" step="1" placeholder="e.g. 78">
+          </div>
+          <div class="dialog-input-group">
+            <label for="student_assignment_score">Assignment Score (e.g. 75)</label>
+            <input type="number" id="student_assignment_score" min="0" max="100" step="1" placeholder="e.g. 75">
+          </div>
+          <div class="dialog-input-group">
+            <label for="num_failed_before">Times Failed Before (e.g. 1)</label>
+            <input type="number" id="num_failed_before" min="0" step="1" placeholder="e.g. 1">
+          </div>
+          <div class="dialog-input-group">
+            <label for="participation_score">Participation Score (0-10)</label>
+            <input type="number" id="participation_score" min="0" max="10" step="1" placeholder="e.g. 8">
+          </div>
+          <button class="btn btn-primary" onclick="predict()">Predict</button>
+          <div id="passPredictorError" class="dialog-error"></div>
+          <div id="passPredictorLoader" class="loader" style="display: none; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto;">
+          </div>
+          <div id="passPredictorResult" class="dialog-result">
+            <h3 id="passPredictorMessage">Result</h3>
+            <p id="passPredictorDetails"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mood Detector Dialog -->
+      <div id="moodDetectorDialog" class="dialog-overlay">
+        <div class="dialog-box">
+          <div class="dialog-header">
+            <h3>Mood Detector Demo</h3>
+            <button class="dialog-close" onclick="closeDialog('moodDetectorDialog')">&times;</button>
+          </div>
+          <div class="dialog-input-group">
+            <label for="mood-text">Enter your text</label>
+            <textarea id="mood-text" placeholder="Type something..."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="analyzeMood()">Analyze Mood</button>
+          <div id="mood-error" class="dialog-error"></div>
+          <div id="mood-loader" class="loader" style="display: none; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto;"></div>
+          <div id="mood-result" class="dialog-result">
+            <div class="mood-emoji" id="mood-emoji">😐</div>
+            <h4 id="mood-title">Neutral</h4>
+            <p id="mood-description">Your text seems neutral in sentiment.</p>
+            <div class="mood-score">Sentiment Score: <span id="mood-score">0.0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2>Get In <span>Touch</span></h2>
+      
+      <div class="contact-container">
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <div class="contact-links">
+            <a href="mailto:rishabdixit402@gmail.com" class="contact-link">
+              <i class="fas fa-envelope"></i>
+              <span>rishabdixit402@gmail.com</span>
+            </a>
+            <a href="https://github.com/being-souL1230" target="_blank" class="contact-link">
+              <i class="fab fa-github"></i>
+              <span>GitHub: being-souL1230</span>
+            </a>
+            <a href="https://www.linkedin.com/in/rishab-dixit-6497aa357" target="_blank" class="contact-link">
+              <i class="fab fa-linkedin"></i>
+              <span>LinkedIn: Rishab Dixit</span>
+            </a>
+          </div>
+        </div>
+        
+        <div class="contact-form">
+          <h3>Send Me a Message</h3>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+          <div id="form-message" style="margin-top: 20px; display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="logo">Rishab<span>.</span></div>
+        <div class="social-links">
+          <a href="https://github.com/being-souL1230" target="_blank" class="social-link">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/rishab-dixit-6497aa357" target="_blank" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="mailto:rishabdixit402@gmail.com" class="social-link">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+        <p class="copyright">© 2023 Rishab Dixit. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        navLinks.classList.remove('active');
+        
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Form submission
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('form-message');
+    
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // Simulate form submission
+      formMessage.textContent = `Thank you, ${name}! Your message has been sent.`;
+      formMessage.style.display = 'block';
+      formMessage.style.backgroundColor = 'rgba(40, 167, 69, 0.1)';
+      formMessage.style.color = '#28a745';
+      formMessage.style.padding = '15px';
+      formMessage.style.borderRadius = '5px';
+      formMessage.style.textAlign = 'center';
+      
+      // Reset form
+      contactForm.reset();
+      
+      // Hide message after 5 seconds
+      setTimeout(() => {
+        formMessage.style.display = 'none';
+      }, 5000);
+    });
+    
+    // Dialog handling
+    function showPassPredictorDialog() {
+      document.getElementById('passPredictorDialog').style.display = 'flex';
+      document.getElementById('passPredictorResult').style.display = 'none';
+      document.getElementById('passPredictorError').innerText = '';
+      document.getElementById('passPredictorLoader').style.display = 'none';
+      // Reset inputs
+      const inputs = ['study_hours', 'sleep_hours', 'attendance', 'class_avg_score', 
+                     'student_test_score', 'student_assignment_score', 'num_failed_before', 'participation_score'];
+      inputs.forEach(id => document.getElementById(id).value = '');
+    }
+
+    function showMoodDetectorDialog() {
+      document.getElementById('moodDetectorDialog').style.display = 'flex';
+      document.getElementById('mood-result').style.display = 'none';
+      document.getElementById('mood-error').innerText = '';
+      document.getElementById('mood-loader').style.display = 'none';
+      document.getElementById('mood-text').value = '';
+    }
+
+    function closeDialog(dialogId) {
+      document.getElementById(dialogId).style.display = 'none';
+    }
+
+    // Initialize Pyodide
+    let pyodideInstance = null;
+    
+    async function initializePyodide() {
+      try {
+        pyodideInstance = await loadPyodide({
+          indexURL: "https://cdn.jsdelivr.net/pyodide/v0.23.4/full/"
+        });
+        await pyodideInstance.loadPackage(["numpy", "pandas", "scikit-learn"]);
+        
+        // Install vaderSentiment for Mood Detector
+        await pyodideInstance.runPythonAsync(`
+          import micropip
+          await micropip.install('vaderSentiment')
+        `);
+        
+        console.log("Pyodide and packages loaded successfully");
+      } catch (error) {
+        showError("Failed to initialize Pyodide: " + error.message);
+      }
+    }
+    
+    // Initialize Pyodide when the page loads
+    initializePyodide();
+    
+    // Pass Predictor function
+    async function predict() {
+      if (!pyodideInstance) {
+        showError("Pyodide is still loading. Please wait a moment and try again.", 'passPredictorError', 'passPredictorLoader');
+        return;
+      }
+    
+      const fields = [
+        "study_hours", "sleep_hours", "attendance", "class_avg_score",
+        "student_test_score", "student_assignment_score",
+        "num_failed_before", "participation_score"
+      ];
+    
+      const inputData = {};
+      for (let field of fields) {
+        const input = document.getElementById(field);
+        const val = parseFloat(input.value);
+        if (isNaN(val)) {
+          showError(`Please enter a valid ${field.replace('_', ' ')}.`, 'passPredictorError', 'passPredictorLoader');
+          return;
+        }
+        inputData[field] = val;
+      }
+    
+      showLoader(true, 'passPredictorLoader');
+    
+      try {
+        // Convert the input data to a format Pyodide can use
+        const inputArray = [
+          inputData.study_hours,
+          inputData.sleep_hours,
+          inputData.attendance,
+          inputData.class_avg_score,
+          inputData.student_test_score,
+          inputData.student_assignment_score,
+          inputData.num_failed_before,
+          inputData.participation_score
+        ];
+    
+        // Run the Python code
+        const code = `
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+
+# Training data
+X = np.array([
+    [5, 7, 85, 60, 78, 80, 0, 8],    # Pass
+    [2, 5, 60, 50, 40, 35, 2, 3],     # Fail
+    [7, 6, 90, 70, 88, 85, 0, 9],     # Pass
+    [4, 6, 70, 55, 60, 65, 1, 5],     # Pass
+    [1, 4, 40, 45, 30, 25, 3, 2],     # Fail
+    [6, 8, 95, 65, 82, 78, 0, 7],     # Pass
+    [3, 5, 65, 52, 45, 40, 2, 4]      # Fail
+])
+y = np.array([1, 0, 1, 1, 0, 1, 0])  # 1 = Pass, 0 = Fa
+il
+
+# Scale and train model
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+model = LogisticRegression(random_state=42)
+model.fit(X_scaled, y)
+
+# Prepare user input
+user_input = np.array([${inputArray}]).reshape(1, -1)
+user_scaled = scaler.transform(user_input)
+
+# Make prediction
+prediction = model.predict(user_scaled)[0]
+probability = model.predict_proba(user_scaled)[0]
+
+# Analyze factors
+factors = []
+if ${inputData.study_hours} >= 6:
+    factors.append("Good study hours (≥6)")
+else:
+    factors.append("Could study more (<6 hours)")
+    
+if ${inputData.sleep_hours} >= 7:
+    factors.append("Good sleep hours (≥7)")
+else:
+    factors.append("Could use more sleep (<7 hours)")
+
+if ${inputData.attendance} >= 75:
+    factors.append("High attendance (≥75%)")
+else:
+    factors.append("Low attendance (<75%)")
+
+if ${inputData.student_test_score} >= 70:
+    factors.append("Good test score (≥70)")
+else:
+    factors.append("Test score needs improvement (<70)")
+
+if ${inputData.student_assignment_score} >= 70:
+    factors.append("Strong assignment score (≥70)")
+else:
+    factors.append("Assignment score needs improvement (<70)")
+
+if ${inputData.participation_score} >= 6:
+    factors.append("Active participation (≥6)")
+else:
+    factors.append("Could participate more (<6)")
+
+if ${inputData.num_failed_before} > 0:
+    factors.append(f"Past failures (${inputData.num_failed_before}) may affect result")
+
+# Calculate relative class performance
+class_performance = (${inputData.student_test_score} - ${inputData.class_avg_score}) / ${inputData.class_avg_score} * 100
+if class_performance > 0:
+    factors.append(f"Performing ${Math.abs(class_performance).toFixed(1)}% above class average")
+else:
+    factors.append(f"Performing ${Math.abs(class_performance).toFixed(1)}% below class average")
+
+# Return results as a dictionary
+result = {
+    "prediction": int(prediction),
+    "label": "PASS" if prediction == 1 else "FAIL",
+    "confidence": round(float(probability[prediction]) * 100, 1),
+    "prob_pass": round(float(probability[1]) * 100, 1),
+    "prob_fail": round(float(probability[0]) * 100, 1),
+    "factors": factors
+}
+
+result
+`;
+    
+        const result = await pyodideInstance.runPythonAsync(code);
+        showLoader(false, 'passPredictorLoader');
+    
+        // Convert the result to a JavaScript object
+        const resultObj = {
+          label: result.get('label'),
+          confidence: result.get('confidence'),
+          prob_pass: result.get('prob_pass'),
+          prob_fail: result.get('prob_fail'),
+          factors: result.get('factors').toJs()
+        };
+    
+        // Format the output message
+        let factorsHTML = resultObj.factors.map(factor => `• ${factor}`).join('<br>');
+        
+        document.getElementById("passPredictorMessage").innerText = `Prediction: ${resultObj.label} (${resultObj.confidence}% confidence)`;
+        document.getElementById("passPredictorDetails").innerHTML = `
+          <strong>📊 Probability:</strong><br>
+          ✅ Pass: ${resultObj.prob_pass}%<br>
+          ❌ Fail: ${resultObj.prob_fail}%<br><br>
+          <strong>📌 Key Factors:</strong><br>
+          ${factorsHTML}
+        `;
+        document.getElementById("passPredictorResult").style.display = "block";
+        document.getElementById("passPredictorError").innerText = "";
+        
+      } catch (error) {
+        showLoader(false, 'passPredictorLoader');
+        showError("Prediction failed: " + error.message, 'passPredictorError', 'passPredictorLoader');
+        console.error("Prediction error:", error);
+      }
+    }
+    
+    // Mood Detector function
+    async function analyzeMood() {
+      if (!pyodideInstance) {
+        showError("Pyodide is still loading. Please wait a moment and try again.", 'mood-error', 'mood-loader');
+        return;
+      }
+    
+      const text = document.getElementById('mood-text').value.trim();
+      if (!text) {
+        showError("Please enter some text to analyze.", 'mood-error', 'mood-loader');
+        return;
+      }
+    
+      showLoader(true, 'mood-loader');
+      document.getElementById('mood-result').style.display = 'none';
+    
+      try {
+        // Escape text for Python
+        const escapedText = text.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        
+        // Run the Python code for sentiment analysis
+        const code = `
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+analyzer = SentimentIntensityAnalyzer()
+sentiment = analyzer.polarity_scores("${escapedText}")
+sentiment
+`;
+    
+        const result = await pyodideInstance.runPythonAsync(code);
+        const sentiment = result.toJs();
+        showLoader(false, 'mood-loader');
+        
+        // Determine mood based on compound score
+        let moodTitle, moodDesc, moodEmoji;
+        const compound = sentiment.compound;
+        
+        if (compound >= 0.05) {
+          moodTitle = "Positive";
+          moodDesc = "Your text expresses positive sentiment!";
+          moodEmoji = "😊";
+        } else if (compound <= -0.05) {
+          moodTitle = "Negative";
+          moodDesc = "Your text expresses negative sentiment.";
+          moodEmoji = "😞";
+        } else {
+          moodTitle = "Neutral";
+          moodDesc = "Your text seems neutral in sentiment.";
+          moodEmoji = "😐";
+        }
+        
+        // Update UI
+        document.getElementById('mood-emoji').innerText = moodEmoji;
+        document.getElementById('mood-title').innerText = moodTitle;
+        document.getElementById('mood-description').innerText = moodDesc;
+        document.getElementById('mood-score').innerText = compound.toFixed(2);
+        
+        // Set mood class
+        const moodResult = document.getElementById('mood-result');
+        moodResult.className = 'dialog-result';
+        moodResult.classList.add(`mood-${moodTitle.toLowerCase()}`);
+        moodResult.style.display = 'block';
+        
+        document.getElementById('mood-error').innerText = "";
+        
+      } catch (error) {
+        showLoader(false, 'mood-loader');
+        showError("Analysis failed: " + error.message, 'mood-error', 'mood-loader');
+        console.error("Mood analysis error:", error);
+      }
+    }
+    
+    // Helper functions
+    function showError(message, errorId, loaderId) {
+      document.getElementById(errorId).innerText = message;
+      showLoader(false, loaderId);
+    }
+    
+    function showLoader(show, loaderId) {
+      document.getElementById(loaderId).style.display = show ? "block" : "none";
+    }
+    
+    // Initialize progress animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const progressElements = document.querySelectorAll('.progress-fill');
+      progressElements.forEach(el => {
+        const width = el.style.width;
+        el.style.width = '0';
+        setTimeout(() => {
+          el.style.width = width;
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>
